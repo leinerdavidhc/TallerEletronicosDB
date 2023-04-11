@@ -227,3 +227,23 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-04-10 23:57:06
+
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `aparatoXcomponente`()
+BEGIN
+Select CP.NOMBRE,CP.ESPECIFICACION,AE.DESCRIPCION From componente_piezas CP
+join aparato_electronico AE
+on CP.APARATO_ELECTRONICO_CODIGO_A_E=AE.CODIGO_A_E;
+END
+DELIMITER ; 
+
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `aparato_cant_menoroigual_a2`()
+BEGIN
+SELECT aparatoE.DESCRIPCION as aparato,count(compoP.APARATO_ELECTRONICO_CODIGO_A_E) canComponente FROM aparato_electronico aparatoE
+join componente_piezas compoP
+on compoP.APARATO_ELECTRONICO_CODIGO_A_E=aparatoE.CODIGO_A_E
+GROUP BY aparatoE.CODIGO_A_E
+HAVING canComponente<=2;
+END
+DELIMITER ;
