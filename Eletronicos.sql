@@ -2,7 +2,6 @@ CREATE DATABASE  IF NOT EXISTS `eletronicos` /*!40100 DEFAULT CHARACTER SET utf8
 USE `eletronicos`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: eletronicos
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -128,6 +127,51 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'eletronicos'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `Aparato_CantComp` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Aparato_CantComp`()
+BEGIN
+SELECT aparatoE.DESCRIPCION as aparato,count(compoP.APARATO_ELECTRONICO_CODIGO_A_E) canComponente FROM aparato_electronico aparatoE
+join componente_piezas compoP
+on compoP.APARATO_ELECTRONICO_CODIGO_A_E=aparatoE.CODIGO_A_E
+GROUP BY aparatoE.CODIGO_A_E;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `aparato_cant_mayoroigual_a3` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `aparato_cant_mayoroigual_a3`()
+BEGIN
+SELECT aparatoE.DESCRIPCION as aparato,count(compoP.APARATO_ELECTRONICO_CODIGO_A_E) canComponente FROM aparato_electronico aparatoE
+join componente_piezas compoP
+on compoP.APARATO_ELECTRONICO_CODIGO_A_E=aparatoE.CODIGO_A_E
+GROUP BY aparatoE.CODIGO_A_E
+HAVING canComponente>=3;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `Descripcion&Nombre` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
